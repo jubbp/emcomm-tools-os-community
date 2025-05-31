@@ -10,10 +10,15 @@
   },
   "notes": [
     "Tune radio to desired frequency.",
-    "Long press [MODE] and set desired mode.",
-    "Use 'DATA-U' for most HF operation",
-    "Use 'TODO' for FM packet operation",
-    "Under MODE, long press 'PRESET' and select FT8"
+    "Long press [MODE], then set accordingly for HF or VHF/UHF.",
+    "For HF operation:",
+    "- First, select 'DATA-U'.",
+    "- Then, long press 'PRESET' and select 'FT8'.",
+    "- The 'PREEST' button should be highlighted in blue.",
+    "For VHF/UHF FM operation:",
+    "- First, select 'FM'.",
+    "- Then, long press 'PRESET' and select 'FT8'.",
+    "- The 'PRESET' button should be highlighted in blue."
   ],
   "fieldNotes": [
   ]
