@@ -2,27 +2,29 @@
 #
 # Author  : Gaston Gonzalez
 # Date    : 4 June 2025
-# Update  : 5 June 2025
+# Update  : 7 June 2025
 # Purpose : Wrapper script around dump1090
 #
 # Preconditions:
-# 1. RTL-SDR is connected and detected
+# 1. RTL-SDR v2 is connected and detected
 #
 # Postconditions:
 # 1. dump1099 is launched
 # 2. A map is launched
 
-# TODO: Increse size of aircraft
-# TODO: Research why RTL-SDR v4 does not work
-# TODO: Check for RTL-SDR device
 # TODO: Add a systemd user service to start dump1090
 # TODO: Use icon and add to launcher
+# TODO: Increse size of aircraft
+# TODO: Research why RTL-SDR v4 does not work
+# TODO: Test RTL-SDR v3 
 # TODO: Use local new ETC offline map engine
 
 source /opt/emcomm-tools/bin/et-common
 
 DUMP1090_CONF_DIR="${HOME}/.local/share/emcomm-tools/dump1090"
 DUMP1090_MAP_HTML="${DUMP1090_CONF_DIR}/gmap.html"
+
+exit-if-no-sdr
 
 if [[ ! -e ${DUMP1090_MAP_HTML} ]]; then
   et-log "Map HTML not found: ${DUMP1090_MAP_HTML}"
@@ -54,7 +56,7 @@ fi
 CMD="dump1090 --net --net-http-port 1090"
 et-log "Starting dump1090 in ${DUMP1090_CONF_DIR} with: ${CMD}"
 
-${CMD}
+${CMD} 
 
 if [[ $? -ne 0 ]]; then
   notify-user "RTL-SDR not detected. Please connect it and retry."

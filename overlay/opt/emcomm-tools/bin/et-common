@@ -1,8 +1,14 @@
 #!/bin/bash
 # Author  : Gaston Gonzalez
 # Date    : 1 February 2025
-# Updated : 5 June 2025
+# Updated : 7 June 2025
 # Purpose : Common environment variables and functions
+
+# Standardized device paths for supported hardware
+export ET_DEVICE_AUDIO="/dev/et-audio"
+export ET_DEVICE_CAT="/dev/et-cat"
+export ET_DEVICE_GPS="/dev/et-gps"
+export ET_DEVICE_SDR="/dev/et-sdr"
 
 export ESC="\x1B"
 export RED="${ESC}[1;31m"
@@ -21,4 +27,11 @@ show-err-dialog() {
 # Display a notification message as a UI popup in the desktop
 notify-user() {
   notify-send -t 5000 --app-name="EmComm Tools" "$1"
+}
+
+exit-if-no-sdr() {
+  if [[ ! -e ${ET_DEVICE_SDR} ]]; then
+    et-log "No ${ET_DEVICE_SDR} detected."
+    exit 1
+  fi
 }
