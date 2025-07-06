@@ -1,7 +1,7 @@
 #!/bin/bash
 # Author  : Gaston Gonzalez
 # Date    : 4 June 2025
-# Updated : 5 June 2025
+# Updated : 6 July 2025
 # Purpose : Install dump1090 (ADB-S aircraft tracking)
 set -e
 trap 'last_command=$current_command; current_command=$BASH_COMMAND' DEBUG
@@ -20,7 +20,7 @@ DUMP1090_CONF_DIR="/etc/skel/.local/share/emcomm-tools/dump1090"
 
 if [[ ! -e ${ET_DIST_DIR}/${DOWNLOAD_FILE} ]]; then
 
-  URL="https://github.com/antirez/dump1090/archive/refs/heads/master.zip"
+  URL="https://github.com/thetechprepper/dump1090/archive/refs/heads/master.zip"
 
   et-log "Downloading ${APP}: ${URL}"
   curl -s -L -o ${DOWNLOAD_FILE} --fail ${URL}
