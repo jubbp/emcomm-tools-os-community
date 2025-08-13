@@ -2,7 +2,7 @@
 #
 # Author  : Gaston Gonzalez
 # Date    : 16 March 2024
-# Updated : 22 July 2025
+# Updated : 13 August 2025
 # Purpose : Main installer for EmComm Tools Community (ETC)
 
 . ./env.sh
@@ -78,6 +78,7 @@ exitIfNotRoot
 ./download-et-maps.sh
 
 # Install ETC applications
+./install-et-api.sh
 ./install-et-aircraft.sh
 
 # Install documentation tools
