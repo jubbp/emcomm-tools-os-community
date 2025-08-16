@@ -39,6 +39,11 @@ MONTH_FMT=$(date +'%-m.00')
 TX_STATION=$1
 TX_JSON=tx-station.json
 curl -f -s http://localhost:1981/api/license?callsign=$TX_STATION > $TX_JSON
+if [[ $? -ne 0 ]]; then
+  echo "Location not found for callsign: ${TX_STATION}. Exiting."
+  exit 1
+fi
+
 TL=$(cat $TX_JSON | jq .lat)
 TK=$(cat $TX_JSON | jq .lon)
 
@@ -60,6 +65,11 @@ TLO=$( awk -v n1=$TK1 -v n2=0 'BEGIN {if (n1<n2) { n1=substr(n1,2); printf ("%7s
 RX_STATION=$2
 RX_JSON=rx-station.json
 curl -f -s http://localhost:1981/api/license?callsign=$RX_STATION > $RX_JSON
+if [[ $? -ne 0 ]]; then
+  echo "Location not found for callsign: ${RX_STATION}. Exiting."
+  exit 1
+fi
+
 RL=$(cat $RX_JSON | jq .lat)
 RK=$(cat $RX_JSON | jq .lon)
 
