@@ -2,7 +2,7 @@
 #
 # Author  : Gaston Gonzalez
 # Date    : 23 May 2023
-# Updated : 16 August 2025
+# Updated : 17 August 2025
 # Purpose : Offline HF prediction using voacapl
 source /opt/emcomm-tools/bin/et-common
 
@@ -74,7 +74,7 @@ usage() {
   echo "  --rx-latlon LAT,LON       Receiving station coordinates in decimal degrees"
   echo
   echo "Other options:"
-  echo "  -p POWER                  Output power [5|100|500|1500]"
+  echo "  -p POWER                  Output power [5|20|100|500|1500]"
   echo "  -m MODE                   Mode [AM|CW|JS8|SSB]"
   echo
 
@@ -158,18 +158,24 @@ RK1=$( awk -v n1=$RK -v n2=180 -v n3=-180 'BEGIN {if (n1<n3 || n1>n2) printf ("%
 # add East or West
 RLO=$( awk -v n1=$RK1 -v n2=0 'BEGIN {if (n1<n2) { n1=substr(n1,2); printf ("%7sW", n1); } else printf ("%7sE", n1);}' )
 
-# Power settings
+# Power settings 
+# Use 80% of user-defined power and express in killiwatts
+# TODO: Make calculation dynamic. 
 PWR=$power
 PW="0.0800"
 echo "TX Power: ${PWR} watts"
 if [ "$PWR" = "5" ]; then
-    PW="0.0040"
+  PW="0.0040"
+elif [ "$PWR" = "20" ]; then
+  PW="0.0160"
 elif [ "$PWR" = "100" ]; then
-    PW="0.0800"
+  PW="0.0800"
 elif [ "$PWR" = "500" ]; then
-    PW="0.4000"
+  PW="0.4000"
 elif [ "$PWR" = "1500" ]; then
-    PW="1.2000"
+  PW="1.2000"
+else
+  echo "Unsupported power level. Defaulting to 100 watts."
 fi
 
 # Mode
