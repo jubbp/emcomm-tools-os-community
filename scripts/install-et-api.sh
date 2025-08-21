@@ -1,6 +1,7 @@
 #!/bin/bash
 # Author  : Gaston Gonzalez
 # Date    : 13 August 2025
+# Updated : 20 August 2025
 # Purpose : Install EmComm Tools API
 set -e
 trap 'last_command=$current_command; current_command=$BASH_COMMAND' DEBUG
