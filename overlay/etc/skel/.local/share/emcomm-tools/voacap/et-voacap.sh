@@ -2,7 +2,7 @@
 #
 # Author  : Gaston Gonzalez
 # Date    : 23 May 2023
-# Updated : 17 August 2025
+# Updated : 21 August 2025
 # Purpose : Offline HF prediction using voacapl
 set -o pipefail
 source /opt/emcomm-tools/bin/et-common
@@ -174,7 +174,9 @@ elif [ "$PWR" = "500" ]; then
 elif [ "$PWR" = "1500" ]; then
   PW="1.2000"
 else
-  echo "Unsupported power level. Defaulting to 100 watts."
+  echo "Unsupported power level."
+  usage
+  exit 1
 fi
 
 # Mode
