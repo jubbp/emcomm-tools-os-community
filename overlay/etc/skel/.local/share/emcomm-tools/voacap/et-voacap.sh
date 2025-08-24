@@ -21,14 +21,14 @@ lookup_station() {
       curl -f -s "http://localhost:1981/api/license?callsign=${value}" > "$json_file"
       if [[ $? -ne 0 ]]; then
         echo -e "${RED}Location not found for callsign: ${value}.${NC}" >&2
-        exit 1
+        return 1
       fi
       ;;
     grid)
       curl -f -s "http://localhost:1981/api/geo/grid?gridSquare=${value}"  | jq '{lat: .position.lat, lon: .position.lon}' > "$json_file"
       if [[ $? -ne 0 ]]; then
         echo -e "${RED}Error converting grid to lat/lon using value: ${value}.${NC}" >&2 
-        exit 1
+        return 1
       fi
       ;;
     latlon)
@@ -37,13 +37,13 @@ lookup_station() {
       IFS=',' read -r lat lon <<< "$value"
       if [[ -z $lat || -z $lon ]]; then
         echo -e "${RED}Invalid lat,lon format: $value. Expected 'lat,lon'.${NC}" >&2
-        exit 1
+        return 1
       fi
       jq -n --arg lat "$lat" --arg lon "$lon" '{lat: ($lat|tonumber), lon: ($lon|tonumber)}' > "$json_file"
       ;;
     *)
       echo -e "${RED}Invalid station type: $type${NC}" >&2
-      exit 1
+      return 1
       ;;
   esac
 
