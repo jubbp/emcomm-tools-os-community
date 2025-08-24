@@ -153,9 +153,11 @@ MONTH_FMT=$(date +'%-m.00')
 #######################################################################
 
 if ! result=$(lookup_station "$tx_type" "$tx_value" tx-station.json); then
-  echo "Try specifying a grid or lat,lon for the transmitting station."
-  echo "  --tx-grid GRID            Transmitting station Maidenhead grid"
-  echo "  --tx-latlon LAT,LON       Transmitting station coordinates in decimal degrees"
+  if [[ "$tx_type" == "call" ]]; then
+    echo "Try specifying a grid or lat,lon for the transmitting station."
+    echo "  --tx-grid GRID            Transmitting station Maidenhead grid"
+    echo "  --tx-latlon LAT,LON       Transmitting station coordinates in decimal degrees"
+  fi
   exit 1
 fi
 read TL TK <<< "$result"
@@ -176,9 +178,11 @@ TLO=$( awk -v n1=$TK1 -v n2=0 'BEGIN {if (n1<n2) { n1=substr(n1,2); printf ("%7s
 #######################################################################
 
 if ! result=$(lookup_station "$rx_type" "$rx_value" rx-station.json); then
-  echo "Try specifying a grid or lat,lon for the receiving station."
-  echo "  --rx-grid GRID            Receiving station Maidenhead grid"
-  echo "  --rx-latlon LAT,LON       Receiving station coordinates in decimal degrees"
+  if [[ "$rx_type" == "call" ]]; then
+    echo "Try specifying a grid or lat,lon for the receiving station."
+    echo "  --rx-grid GRID            Receiving station Maidenhead grid"
+    echo "  --rx-latlon LAT,LON       Receiving station coordinates in decimal degrees"
+  fi
   exit 1
 fi
 read RL RK <<< "$result"
