@@ -2,7 +2,7 @@
 #
 # Author  : Gaston Gonzalez
 # Date    : 23 May 2023
-# Updated : 24 August 2025
+# Updated : 27 August 2025
 # Purpose : Offline HF prediction using voacapl
 set -e
 set -o pipefail
@@ -17,6 +17,17 @@ lookup_station() {
   local json_file="$3"
 
   case "$type" in
+    gps)
+      curl -f -s "http://localhost:1981/api/geo/position" | jq .position > "$json_file"
+      if [[ $? -ne 0 ]]; then
+        echo -e "${RED}Can't determine your position for use as the transmitting station.${NC}" >&2
+        echo "Try specifying your callsign, grid or lat,lon." >&2
+        echo "  --tx-call CALLSIGN        Transmitting station callsign" >&2
+        echo "  --tx-grid GRID            Transmitting station Maidenhead grid" >&2
+        echo "  --tx-latlon LAT,LON       Transmitting station coordinates in decimal degrees" >&2
+        return 1
+      fi
+      ;;
     call)
       curl -f -s "http://localhost:1981/api/license?callsign=${value}" > "$json_file"
       if [[ $? -ne 0 ]]; then
@@ -128,9 +139,12 @@ usage() {
   echo "  --rx-grid GRID            Receiving station Maidenhead grid"
   echo "  --rx-latlon LAT,LON       Receiving station coordinates in decimal degrees"
   echo
-  echo "Other options:"
+  echo "If no --tx option is specified, your position will be pulled from a supported"
+  echo "ETC GPS unit or fallback to the grid square configured by 'et-user'."
+  echo 
+  echo "Other options (required):"
   echo "  -p POWER                  Output power [5|20|100|500|1500]"
-  echo "  -m MODE                   Mode [AM|CW|JS8|SSB]"
+  echo "  -m MODE                   Mode [am|cw|js8|ssb]"
   echo
 
   exit 1
@@ -158,8 +172,13 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
+# Use local ETC user position if TX station not defined
+if [[ -z $tx_type ]]; then
+   tx_type="gps"
+fi
+
 # Validate required args
-[[ -z $tx_type || -z $rx_type || -z $power || -z $mode ]] && usage
+[[ -z $rx_type || -z $power || -z $mode ]] && usage
 
 #echo "TX ($tx_type): $tx_value"
 #echo "RX ($rx_type): $rx_value"
@@ -169,8 +188,18 @@ done
 # Allow for case-insensitve match of the user-defined operating mode
 MODE=$mode
 case "${MODE,,}" in
+  js8-slow)
+    MD="10.0"
+    ;;
   js8)
-    MD="13.0"
+    # normal speed
+    MD="14.0"
+    ;;
+  js8-fast)
+    MD="19.0"
+    ;;
+  js8-turbo)
+    MD="24.0"
     ;;
   cw)
     MD="24.0"
