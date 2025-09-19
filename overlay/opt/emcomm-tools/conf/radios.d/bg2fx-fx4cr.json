@@ -1,0 +1,24 @@
+{
+  "id": "bg2fx-fx4cr",
+  "vendor": "BG2FX",
+  "model": "FX-4CR",
+  "rigctrl": {
+    "id": "2031",
+    "baud": "115200",
+    "ptt": "RTS",
+    "pttOnly": "false"
+  },
+  "notes": [
+    "THESE NOTES ARE A WORK IN PROGRESS",
+    "Short press [PWR], then rotate AF knob until POW = 5.0",
+    "Toggle [SSB] button until both USB and DIG appear",
+    "Short press [M. V] until VFOA is displayed",
+    "Set radio volume to 50",
+    "Set mic gain to ?",
+    "Set alsamixer PCM to ?",
+    "Set alsamixer Mic to 50",
+    "Set alsamixer AFC to mm"
+  ],
+  "fieldNotes": [
+  ]
+}
