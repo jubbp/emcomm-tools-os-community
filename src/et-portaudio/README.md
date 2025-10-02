@@ -24,3 +24,9 @@ exit status of 1.
 ``bash
 make
 ```
+
+## Install
+
+```bash
+sudo make install
+```
