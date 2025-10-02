@@ -127,5 +127,18 @@ sed -i "s|^<MT63INTEGRATION>.*|<MT63INTEGRATION>1</MT63INTEGRATION>|" ${FLDIGI_C
 # Repeater configuration
 ########################
 et-log "Updating settings for linked repeater systems..."
+
 # Key up for 2 seconds before transmitting tone. Needed for linked repeater systems.
 sed -i "s|^<PRETONE>.*|<PRETONE>2</PRETONE>|" ${FLDIGI_CONF_FILE}
+
+
+#####################
+# NBEMS configuration
+#####################
+et-log "Updating settings for NBEMS..."
+
+sed -i "s|^<OPEN_NBEMS_FOLDER>.*|<OPEN_NBEMS_FOLDER>1</OPEN_NBEMS_FOLDER>|" ${FLDIGI_CONF_FILE}
+sed -i "s|^<FLMSG_PATHNAME>.*|<FLMSG_PATHNAME>/usr/local/bin/flmsg</FLMSG_PATHNAME>|" ${FLDIGI_CONF_FILE}
+
+# TODO: Add flmsg to ETC installer
+# TODO: Add flamp to ETC installer

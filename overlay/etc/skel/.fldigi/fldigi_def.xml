@@ -1399,11 +1399,11 @@ close flmsg -->
 
 <!-- type: bool; default: false
 Open NBEMS folder upon receipt of an autoextract file -->
-<OPEN_NBEMS_FOLDER>0</OPEN_NBEMS_FOLDER>
+<OPEN_NBEMS_FOLDER>1</OPEN_NBEMS_FOLDER>
 
 <!-- type: std::string; default: &quot;&quot;
 Full pathname to the flmsg executable -->
-<FLMSG_PATHNAME></FLMSG_PATHNAME>
+<FLMSG_PATHNAME>/usr/local/bin/flmsg</FLMSG_PATHNAME>
 
 <!-- type: std::string; default: &quot;dinner_bell&quot;
 audio alert audio clip name / file -->
