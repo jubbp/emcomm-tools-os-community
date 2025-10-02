@@ -121,3 +121,11 @@ sed -i "s|^<TRANSMITRSID>.*|<TRANSMITRSID>1</TRANSMITRSID>|" ${FLDIGI_CONF_FILE}
 et-log "Updating MT63 modem configuration..."
 
 sed -i "s|^<MT63INTEGRATION>.*|<MT63INTEGRATION>1</MT63INTEGRATION>|" ${FLDIGI_CONF_FILE}
+
+
+########################
+# Repeater configuration
+########################
+et-log "Updating settings for linked repeater systems..."
+# Key up for 2 seconds before transmitting tone. Needed for linked repeater systems.
+sed -i "s|^<PRETONE>.*|<PRETONE>2</PRETONE>|" ${FLDIGI_CONF_FILE}

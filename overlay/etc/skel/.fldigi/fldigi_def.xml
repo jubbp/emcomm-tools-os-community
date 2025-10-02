@@ -1277,7 +1277,7 @@ Video ID text for SENDTEXTID (keep short!) -->
 
 <!-- type: double; default: 0.0
 Single tone at center of modem BW, carrier detect for amplifiers -->
-<PRETONE>0</PRETONE>
+<PRETONE>2</PRETONE>
 
 <!-- type: bool; default: false
 Decode received DTMF tones -->
