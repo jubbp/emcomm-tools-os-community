@@ -76,19 +76,19 @@ update-config () {
     et-portaudio 2>/dev/null > ${PORT_AUDIO_CONF}
 
     if [[ $? -ne 0 ]]; then
-      echo "No supported ET_AUDIO device found"
+      et-log "No supported ET_AUDIO device found"
       exit 1
     fi
 
     DEVICE=$(jq -r -e '.device' ${PORT_AUDIO_CONF})
     if [[ $? -ne 0 ]]; then
-      echo "Error getting PulseAudio device name for ET_AUDIO device"
+      et-log "Error getting PulseAudio device name for ET_AUDIO device"
       exit 1
     fi
 
     INDEX=$(jq -r -e '.index' ${PORT_AUDIO_CONF})
     if [[ $? -ne 0 ]]; then
-      echo "Error getting PulseAudio device index for ET_AUDIO device"
+      et-log "Error getting PulseAudio device index for ET_AUDIO device"
       exit 1
     fi
 
