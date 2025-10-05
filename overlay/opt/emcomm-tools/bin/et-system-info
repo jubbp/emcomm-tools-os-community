@@ -50,7 +50,7 @@ case $1 in
       [[ -e ${GEO_CONF} ]] && rm ${GEO_CONF}
       if [[ $? -eq 0 ]]; then
         echo ${API_GRID}
-	exit
+        exit
       fi
     fi
 
