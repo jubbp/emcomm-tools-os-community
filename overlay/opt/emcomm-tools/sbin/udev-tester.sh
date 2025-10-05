@@ -1,7 +1,7 @@
 #!/bin/bash
 # Author  : Gaston Gonzalez
 # Date    : 11 October 2024
-# Updated : 13 September 2025
+# Updated : 5 October 2025
 # Purpose : Perform tests that can be used by the udev subsystem to aid
 #           in rule development. This is intended to by used with the PROGRAM
 #           directive inside of a udev rule.
@@ -12,6 +12,20 @@
 
 ET_HOME=/opt/emcomm-tools
 ACTIVE_RADIO="${ET_HOME}/conf/radios.d/active-radio.json"
+
+# Exit with a 0 exit status if, and only if, the currently selected radio is
+# a Xiegu X6100 
+test_xiegu_x6100() {
+  if [[ -L "${ET_HOME}/conf/radios.d/active-radio.json" ]]; then
+    ID=$(cat "${ET_HOME}/conf/radios.d/active-radio.json" | jq -r .id)
+
+    if [[ "$ID" == "xiegu-x6100" ]]; then
+      exit 0
+    fi
+  fi
+  
+  exit 1
+}
 
 # Exit with a 0 exit status if, and only if, the currently selected radio is
 # a Yaesu FTX-1.
@@ -101,6 +115,9 @@ if [ $# -ne 1 ]; then
 fi
 
 case $1 in
+  xiegu-x6100)
+    test_xiegu_x6100
+  ;;
   yaesu-ftx1)
     test_yaesu_ftx1
   ;;
@@ -112,6 +129,7 @@ case $1 in
   ;;
   digirig-mobile)
     test_digirig_mobile
+  ;;
 esac
 
 exit 1
