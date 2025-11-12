@@ -316,6 +316,14 @@ else
   exit 1
 fi
 
+# TODO: Add as an argument to R6
+# Man-made Noise
+# 140. industrial
+# 144. residential
+# 150. rural
+# 163. remote
+MMN="144."
+
 # Format for 117
 # NOTE: The card requires <SSN>. (117.)
 ssn=`grep "$YEAR $MONTH" ${ET_SSN} | awk '{print $5}' | cut -d"." -f1`
@@ -334,7 +342,7 @@ MONTH      $YEAR $MONTH_FMT
 SUNSPOT    $ssn.
 LABEL     $TX$RX
 CIRCUIT  $TLA  $TLO   $RLA  $RLO  S     0
-SYSTEM       1. 155. 3.00  90. $MD 3.00 0.10
+SYSTEM       1. $MMN 3.00  90. $MD 3.00 0.10
 FPROB      1.00 1.00 1.00 0.00
 ANTENNA       1    1    2   30     0.000[samples/sample.00    ]  0.0    $PW
 ANTENNA       2    2    2   30     0.000[samples/sample.00    ]  0.0    0.0000
